@@ -1,0 +1,16 @@
+# TypeScript/JavaScript
+node_modules
+.npmrc
+
+# JetBrains products are ignored by default - remove where needed
+.idea/
+
+# Repo-specific
+.vscode
+.env
+.nuxt
+.branch
+.commit
+nuxt.build.log
+nuxt.config.ts
+.npmrc
