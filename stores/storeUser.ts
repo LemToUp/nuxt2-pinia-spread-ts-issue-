@@ -1,12 +1,16 @@
 import { defineStore } from 'pinia';
-import { getOrganizationState, organizationActions, organizationMutations } from '~/utils/store/mixins/organization';
+import {
+  getOrganizationState,
+  IOrganizationState,
+  organizationActions,
+} from '~/utils/store/mixins/organization';
 
 export interface IUser {
   id: string,
   name: string,
   organization_id?: string
 }
-export interface IStateUser {
+export interface IStateUser extends IOrganizationState {
   user?: IUser,
 }
 export enum Actions {
@@ -37,13 +41,13 @@ export const useStoreUser = defineStore(storeName, {
   state: getDefaultState,
 
   actions: {
-    ...organizationMutations(Mutations),
+
 
     [Mutations.SET_USER](user: IUser) {
       this.user = user;
     },
 
-    ...organizationActions(Actions, Mutations),
+    ...organizationActions<typeof storeName, IStateUser, any, Actions>(Actions, Mutations),
 
     async [Actions.GET_USER](id: string) {
       const { data: user } = await new Promise((resolve) => setTimeout(() => resolve({
